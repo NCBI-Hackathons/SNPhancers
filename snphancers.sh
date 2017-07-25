@@ -5,13 +5,12 @@ set -e
 if [ "$#" -ne 3 ]; then
 	echo "Description: Determines the sets of GWAS intergenic SNPs that are contained in known enhancer regions."
 	BASENAME=`basename $0`
-	echo "Usage: ${BASENAME} [output directory] [email address] [threads]"
+	echo "Usage: ${BASENAME} [output directory] [threads]"
 	exit 0
 fi
 
 DIR=$1
-EMAIL=$2
-THREADS=$3
+THREADS=$2
 
 SRC=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/src # the location of the `src` directory in the repo
 
