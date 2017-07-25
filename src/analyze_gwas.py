@@ -45,7 +45,7 @@ def create_tsv(alignments,output_path):
 			output.write('\n')
 
 help_message = ""
-usage_message = "[-h help and usage] [-f path to FASTA file containing SNP sequences] [-m path to MBO file] "\
+usage_message = "[-h help and usage] [-f path to FASTA file containing BLASTDB seq] [-m path to MBO file] "\
               + "[-o output path for TSV]"
 
 options = "hm:f:o:"

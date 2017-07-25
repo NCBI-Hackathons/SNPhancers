@@ -3,7 +3,9 @@
 set -e
 
 if [ "$#" -ne 5 ]; then
-	echo "$0 [query file] [database directory] [database name] [output path] [email address]"
+	echo "Description: Runs Magic-BLAST given a query FASTA file and BLAST database"
+	BASENAME=`basename $0`
+	echo "Usage: ${BASENAME} [query file] [database directory] [database name] [output path] [threads]"
 	exit 0
 fi
 
@@ -11,8 +13,7 @@ QUERY=$1
 DBDIR=$2
 DBNAME=$3
 OUTPUT=$4
-EMAIL=$5
+THREADS=$5
 
 export BLASTDB=${DBDIR}
-magicblast -query ${QUERY} -db ${DBNAME} -outfmt tabular -out ${OUTPUT}
-echo "" | mail -s "Finished running Magic-BLAST on enhancer regions and intergenic SNPs" ${EMAIL}
+magicblast -query ${QUERY} -db ${DBNAME} -outfmt tabular -out ${OUTPUT} -num_threads ${THREADS}
