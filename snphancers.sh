@@ -20,7 +20,7 @@ ${SRC}/get_gwas_snp_accessions.sh ${SNP_ACC} ${DIR}
 
 ## Get the accessions of RefSeq enhancers  
 ENHANCER_ACC=${DIR}/enhancer_acc.txt
-# Insert method to get enhancer accessions here
+${SRC}/get_enhancer_accessions.sh ${ENHANCER_ACC}
 
 ## Create enhancer FASTA file
 ENHANCER_FASTA=${DIR}/enhancer.fasta
