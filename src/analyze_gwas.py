@@ -6,6 +6,9 @@ import getopt
 import sys
 
 def get_accessions(fasta_path):
+    '''
+    Records the accessions of all the database sequences. 
+    '''
 	accessions = {}
 	with open(fasta_path,'r') as fasta:
 		id_number = 0
@@ -17,6 +20,9 @@ def get_accessions(fasta_path):
 	return accessions	
 
 def get_alignments(mbo_path):
+    '''
+    Retrieves the alignments from the Magic-BLAST output file.
+    '''
 	alignments = {}
 	with open(mbo_path,'r') as mbo:
 		for line in mbo:
@@ -32,12 +38,18 @@ def get_alignments(mbo_path):
 	return alignments
 
 def translate_accessions(alignments,accessions):
+    '''
+    Translates the database sequence names from integers to original accessions from RefSeq
+    '''
 	translated_alignments = {}
 	for enhancer in alignments:
 		translated_alignments[enhancer] = [ accessions[id_number] for id_number in alignments[enhancer] ]
 	return translated_alignments
 
 def create_tsv(alignments,output_path):
+    '''
+    Constructs summary TSV file.
+    '''
 	with open(output_path,'w') as output:
 		output.write('Enhancer	Intergenic SNPs\n')
 		for enhancer in alignments:

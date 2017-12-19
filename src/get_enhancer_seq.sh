@@ -10,7 +10,6 @@ fi
 
 INPUT=$1
 OUTPUT=$2
-EMAIL=$3
 
 echo "" > ${OUTPUT}
 
