@@ -1,9 +1,12 @@
 #!/bin/bash
+# Copyright: NCBI 2017
+# Author: Sean La
 
 set -e
 
 if [ "$#" -ne 3 ]; then
-	echo "Description: Determines the sets of GWAS intergenic SNPs that are contained in known enhancer regions."
+	echo "Description: Determines the presence of GWAS intergenic SNPs in known enhancer regions of the"
+	echo "             human genome from NCBI RefSeq."
 	BASENAME=`basename $0`
 	echo "Usage: ${BASENAME} [output directory] [threads]"
 	exit 0
@@ -12,7 +15,8 @@ fi
 DIR=$1
 THREADS=$2
 
-SRC=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/src # the location of the `src` directory in the repo
+## The location of the `src` directory in the repo
+SRC=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/src 
 
 ## Get the accessions of GWAS intergenic SNPs
 SNP_ACC=${DIR}/snp_acc.txt
@@ -41,6 +45,6 @@ ${SRC}/magicblast.sh ${SNP_FLANKS} ${DIR} enhancer ${MBO} ${THREADS}
 TSV=${DIR}/snp_flanks_onto_enhancers.tsv
 ${SRC}/analyze_gwas.py -f ${ENHANCER_FASTA} -m ${MBO} -o ${TSV} 
 
-echo "Analysis of GWAS enhancers and intergenic SNPs complete."
-echo "You can find the TSV file describing the sets of SNPs contained in the enhancer regions in the following file:"
+echo "Analysis of enhancer regions and intergenic SNPs complete."
+echo "You can find the summary TSV file at:"
 echo ${TSV}

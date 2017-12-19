@@ -11,5 +11,4 @@ fi
 
 OUTPUT=$1
 
-esearch -query 'regulatory enhancer[feature key] AND PRJNA343958[bioproject]' -db nucleotide -source refseq -organism human |\
-esummary | xtract -pattern DocumentSummary -element Caption > ${OUTPUT}
+esearch -query 'regulatory enhancer[feature key] AND PRJNA343958[bioproject]' -db nucleotide -source refseq -organism human | esummary | xtract -pattern DocumentSummary -element Caption > ${OUTPUT}

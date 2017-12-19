@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+# Copyright: NCBI 2017
+# Author: Sean La
+
 import getopt
 import sys
 
@@ -44,6 +47,7 @@ def create_tsv(alignments,output_path):
 			output.write(line)
 			output.write('\n')
 
+if "__name__" == __main__:
 help_message = ""
 usage_message = "[-h help and usage] [-f path to FASTA file containing BLASTDB seq] [-m path to MBO file] "\
               + "[-o output path for TSV]"

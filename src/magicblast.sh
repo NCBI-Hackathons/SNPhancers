@@ -3,7 +3,7 @@
 set -e
 
 if [ "$#" -ne 5 ]; then
-	echo "Description: Runs Magic-BLAST given a query FASTA file and BLAST database"
+	echo "Description: Runs Magic-BLAST given a query FASTA file and BLAST database."
 	BASENAME=`basename $0`
 	echo "Usage: ${BASENAME} [query file] [database directory] [database name] [output path] [threads]"
 	exit 0
