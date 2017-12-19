@@ -4,7 +4,7 @@
 
 set -e
 
-if [ "$#" -ne 3 ]; then
+if [ "$#" -ne 2 ]; then
 	echo "Description: Determines the presence of GWAS intergenic SNPs in known enhancer regions of the"
 	echo "             human genome from NCBI RefSeq."
 	BASENAME=`basename $0`
@@ -19,31 +19,45 @@ THREADS=$2
 SRC=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/src 
 
 ## Get the accessions of GWAS intergenic SNPs
+echo "Retrieving accessions of GWAS intergenic SNPs..."
 SNP_ACC=${DIR}/snp_acc.txt
 ${SRC}/get_gwas_snp_accessions.sh ${SNP_ACC} ${DIR} 
+echo "Done."
 
 ## Get the accessions of RefSeq enhancers  
+echo "Retrieving accessions of enhancers of the human genome..."
 ENHANCER_ACC=${DIR}/enhancer_acc.txt
 ${SRC}/get_enhancer_accessions.sh ${ENHANCER_ACC}
+echo "Done."
 
 ## Create enhancer FASTA file
+echo "Creating enhancer sequence FASTA file..."
 ENHANCER_FASTA=${DIR}/enhancer.fasta
 ${SRC}/get_enhancer_seq.sh ${ENHANCER_ACC} ${ENHANCER_FASTA}
+echo "Done."
 
 ## Create SNP flanking sequence FASTA file
+echo "Creating SNP flanking sequence FASTA file..."
 SNP_FLANKS=${DIR}/snps_flanks.fasta
 ${SRC}/find_snp_sequences.sh ${SNP_ACC} ${SNP_FLANKS}
+echo "Done."
 
 ## Construct a BLAST database out of the SNP sequences
+echo "Constructing BLAST database out of SNP sequences..."
 ${SRC}/makeblastdb.sh ${ENHANCER_FASTA} enhancer ${DIR}
+echo "Done."
 
 ## Align SNP flanking sequences with enhancer regions a la Magic-BLAST
+echo "Aligning SNP flanking sequences onto enhancer regions..."
 MBO=${DIR}/snp_flanks_onto_enhancers.mbo
 ${SRC}/magicblast.sh ${SNP_FLANKS} ${DIR} enhancer ${MBO} ${THREADS}
+echo "Done."
 
 ## Determine the sets of SNPs contained in enhancer regions
+echo "Analyzing SNP-enhancer alignments..."
 TSV=${DIR}/snp_flanks_onto_enhancers.tsv
 ${SRC}/analyze_gwas.py -f ${ENHANCER_FASTA} -m ${MBO} -o ${TSV} 
+echo "Done."
 
 echo "Analysis of enhancer regions and intergenic SNPs complete."
 echo "You can find the summary TSV file at:"
